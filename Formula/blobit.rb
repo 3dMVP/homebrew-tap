@@ -5,10 +5,10 @@ class Blobit < Formula
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/3dMVP/CLI/releases/download/v0.1.2/blobit-v0.1.2-aarch64-apple-darwin.zip"
+      url "https://github.com/3dMVP/homebrew-tap/releases/download/v0.1.2/blobit-v0.1.2-aarch64-apple-darwin.zip"
       sha256 "b07388839fdf879a659554d8e07e56ef792f13b679afb42d0e3cf4c897aae291"
     else
-      url "https://github.com/3dMVP/CLI/releases/download/v0.1.2/blobit-v0.1.2-x86_64-apple-darwin.zip"
+      url "https://github.com/3dMVP/homebrew-tap/releases/download/v0.1.2/blobit-v0.1.2-x86_64-apple-darwin.zip"
       sha256 "b1d9b5b60694d3d0a234eb003dafe0b9cf6dbe00e9752d02a69822e0f1119468"
     end
   end
@@ -16,7 +16,7 @@ class Blobit < Formula
   on_linux do
     depends_on "dbus"
 
-    url "https://github.com/3dMVP/CLI/releases/download/v0.1.2/blobit-v0.1.2-x86_64-unknown-linux-gnu.tar.gz"
+    url "https://github.com/3dMVP/homebrew-tap/releases/download/v0.1.2/blobit-v0.1.2-x86_64-unknown-linux-gnu.tar.gz"
     sha256 "49e24316871686640312c452edd5a2741e1629e6ace6b8973fc31d02646fd844"
   end
 
