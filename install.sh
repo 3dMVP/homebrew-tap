@@ -12,6 +12,55 @@ require_command() {
   fi
 }
 
+run_codex_setup() {
+  if "$install_dir/blobit" codex setup; then
+    return 0
+  fi
+
+  echo "Codex plugin setup did not complete." >&2
+  echo "You can retry later with:" >&2
+  echo "  blobit codex setup" >&2
+  return 0
+}
+
+prompt_codex_setup() {
+  if ! command -v codex >/dev/null 2>&1; then
+    return 0
+  fi
+
+  echo
+  echo "Codex detected."
+  echo "Blobit is recommended with the Blobit CLI Skill Pack for game asset workflows."
+
+  case "${BLOBIT_INSTALL_CODEX_PLUGIN:-ask}" in
+    yes | YES | true | TRUE | 1)
+      run_codex_setup
+      return 0
+      ;;
+    no | NO | false | FALSE | 0)
+      echo "Skipped Codex plugin setup."
+      return 0
+      ;;
+  esac
+
+  if [ -r /dev/tty ] && [ -w /dev/tty ]; then
+    printf "Install the recommended Codex plugin now? [Y/n] " > /dev/tty
+    read answer < /dev/tty || answer=""
+    case "$answer" in
+      n | N | no | NO)
+        echo "Skipped Codex plugin setup."
+        ;;
+      *)
+        run_codex_setup
+        ;;
+    esac
+    return 0
+  fi
+
+  echo "To install the recommended Codex plugin, run:"
+  echo "  blobit codex setup"
+}
+
 case "$(uname -s)" in
   Darwin)
     os="darwin"
@@ -88,3 +137,4 @@ mkdir -p "$install_dir"
 install -m 0755 "$tmp_dir/$artifact_dir/blobit" "$install_dir/blobit"
 
 echo "Installed blobit ${tag} to ${install_dir}/blobit"
+prompt_codex_setup
